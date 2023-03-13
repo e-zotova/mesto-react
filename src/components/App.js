@@ -11,6 +11,12 @@ function App() {
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
 
+  function closeAllPopups() {
+    setEditAvatarPopupOpen(false);
+    setEditProfilePopupOpen(false);
+    setAddPlacePopupOpen(false);
+  }
+
   return (
     <div className="main">
       <div className="page">
@@ -22,14 +28,16 @@ function App() {
           onAddPlace={setAddPlacePopupOpen}
           />
 
-        <PopupWithForm title="Обновить аватар" name="popup_edit-avatar" isOpen={isEditAvatarPopupOpen} saveButton="Сохранить">
+        <PopupWithForm title="Обновить аватар" name="popup_edit-avatar"
+                       isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} saveButton="Сохранить">
           <label className="popup__label">
             <input id="avatar-url" type="url" name="avatar" className="input input_type_avatar-image" placeholder="Ссылка на картинку" required />
             <span className="avatar-url-error popup__input-error"></span>
           </label>
         </PopupWithForm>
 
-        <PopupWithForm title="Редактировать профиль" name="popup_profile" isOpen={isEditProfilePopupOpen} saveButton="Сохранить">
+        <PopupWithForm title="Редактировать профиль" name="popup_profile"
+                       isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} saveButton="Сохранить">
         <label className="popup__label">
           <input id="fullname" name="name" type="text" className="input input_type_full-name" placeholder="Имя" minLength="2" maxLength="40" required />
           <span className="fullname-error popup__input-error"></span>
@@ -40,7 +48,8 @@ function App() {
         </label>
       </PopupWithForm>
 
-      <PopupWithForm title="Новое место" name="popup_new-card" isOpen={isAddPlacePopupOpen} saveButton="Создать">
+      <PopupWithForm title="Новое место" name="popup_new-card"
+                     isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} saveButton="Создать">
         <label className="popup__label">
           <input id="placename" type="text" name="name" className="input input_type_place-name" placeholder="Название" minLength="2" maxLength="30" required />
           <span className="placename-error popup__input-error"></span>

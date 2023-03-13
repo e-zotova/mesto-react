@@ -10,7 +10,7 @@ function PopupWithForm(props) {
               {props.children}
               <button type="submit" className="button popup__save-button">{props.saveButton}</button>
             </form>
-            <button type="reset" aria-label="Закрыть" className="button popup__close-button"></button>
+            <button type="reset" aria-label="Закрыть" className="button popup__close-button" onClick={props.onClose}></button>
           </div>
         </div>
     );
