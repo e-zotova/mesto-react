@@ -43,9 +43,9 @@ function Main(props) {
     <main className="content">
       <section className="profile">
         <div className="profile__container">
-          <img className="profile__avatar" src="#" style={avatarStyle} />
+          <img className="profile__avatar" src="#" style={avatarStyle} alt=""/>
           <div className="profile__overlay">
-            <a className="profile__edit-avatar" href="#" onClick={props.onEditAvatar}></a>
+            <a className="profile__edit-avatar" href="/#" onClick={props.onEditAvatar}> </a>
           </div>
         </div>
         <div className="profile__info">
