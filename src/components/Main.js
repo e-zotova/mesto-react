@@ -10,29 +10,27 @@ function Main(props) {
   const [cards, setCards] = React.useState([]);
 
   React.useEffect(() => {
-    api.getUser()
-      .then((userData) => {
+    Promise.all([
+      api.getUser(),
+      api.getInitialCards()
+    ])
+      .then((result) => {
+        const userData = result[0];
         setUserName(userData.name);
         setUserDescription(userData.about);
         setUserAvatar(userData.avatar);
-      })
-      .catch((err) => {
-        console.log(err);
-      })
 
-    api.getInitialCards()
-      .then((cardsData) => {
+        const cardsData = result[1];
         setCards(cardsData.map((item) => ({
           id: item._id,
           name: item.name,
           src: item.link,
-          likesCount: item.likes.length
+          likesCount: item.likes.length,
         })))
       })
       .catch((err) => {
         console.log(err);
       })
-
   }, [])
 
   const avatarStyle = {
@@ -62,7 +60,7 @@ function Main(props) {
 
       <section className="places">
         {cards.map((card) =>
-          <Card key={card.id} name={card.name} src={card.src} likesCount={card.likesCount} />
+          <Card key={card.id} name={card.name} src={card.src} likesCount={card.likesCount} onCardClick={props.onCardClick}/>
         )}
       </section>
     </main>

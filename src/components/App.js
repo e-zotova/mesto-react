@@ -10,11 +10,13 @@ function App() {
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] = React.useState(false);
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
+  const [selectedCard, setSelectedCard] = React.useState({});
 
   function closeAllPopups() {
     setEditAvatarPopupOpen(false);
     setEditProfilePopupOpen(false);
     setAddPlacePopupOpen(false);
+    setSelectedCard({});
   }
 
   return (
@@ -26,6 +28,7 @@ function App() {
           onEditAvatar={setEditAvatarPopupOpen}
           onEditProfile={setEditProfilePopupOpen}
           onAddPlace={setAddPlacePopupOpen}
+          onCardClick={setSelectedCard}
           />
 
         <PopupWithForm title="Обновить аватар" name="popup_edit-avatar"
@@ -60,9 +63,9 @@ function App() {
         </label>
       </PopupWithForm>
 
-      <PopupWithForm title="Вы уверены?" name="popup_delete-card" saveButton="Да"></PopupWithForm>
+      <PopupWithForm title="Вы уверены?" name="popup_delete-card" onClose={closeAllPopups} saveButton="Да"></PopupWithForm>
 
-      <ImagePopup></ImagePopup>
+      <ImagePopup card={selectedCard} onClose={closeAllPopups}></ImagePopup>
 
       <Footer />
       </div>
