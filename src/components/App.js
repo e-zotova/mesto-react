@@ -67,7 +67,7 @@ function App() {
 
       <PopupWithForm title="Вы уверены?" name="popup_delete-card" saveButton="Да"></PopupWithForm>
 
-      <ImagePopup isOpen={isImageOpen} card={selectedCard} onClose={closeAllPopups}></ImagePopup>
+      <ImagePopup card={selectedCard} isOpen={isImageOpen} onClose={closeAllPopups}></ImagePopup>
 
       <Footer />
       </div>
