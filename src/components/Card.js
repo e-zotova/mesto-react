@@ -2,13 +2,14 @@ import React from 'react';
 
 function Card(card) {
   function handleClick() {
-    card.onCardClick(card);
+    card.onCardClick.setSelectedCard(card);
+    card.onCardClick.setIsImageOpen(true);
   }
 
     return (
       <article className="places__card">
         <div className="button places__delete-button"> </div>
-        <img className="button places__image" onClick={handleClick} src={card.src}/>
+        <img className="button places__image" onClick={handleClick} src={card.src} alt={card.name}/>
         <div className="places__item">
           <h2 className="places__name">{card.name}</h2>
           <div className="places__like-item">
