@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import Header from "./Header";
 import Main from "./Main";
 import PopupWithForm from "./PopupWithForm";
@@ -6,12 +6,11 @@ import ImagePopup from "./ImagePopup";
 import Footer from "./Footer";
 
 function App() {
-  const [isEditProfilePopupOpen, setEditProfilePopupOpen] =
-    React.useState(false);
-  const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false);
-  const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
-  const [isImageOpen, setIsImageOpen] = React.useState(false);
-  const [selectedCard, setSelectedCard] = React.useState({});
+  const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
+  const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
+  const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
+  const [isImageOpen, setIsImageOpen] = useState(false);
+  const [selectedCard, setSelectedCard] = useState({});
 
   function closeAllPopups() {
     setEditAvatarPopupOpen(false);
@@ -38,7 +37,6 @@ function App() {
           name="popup_edit-avatar"
           isOpen={isEditAvatarPopupOpen}
           onClose={closeAllPopups}
-          saveButton="Сохранить"
         >
           <label className="popup__label">
             <input
@@ -58,7 +56,6 @@ function App() {
           name="popup_profile"
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
-          saveButton="Сохранить"
         >
           <label className="popup__label">
             <input

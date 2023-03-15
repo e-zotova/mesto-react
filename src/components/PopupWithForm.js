@@ -12,7 +12,7 @@ function PopupWithForm(props) {
         >
           {props.children}
           <button type="submit" className="button popup__save-button">
-            {props.saveButton}
+            {props.saveButton || "Сохранить"}
           </button>
         </form>
         <button
