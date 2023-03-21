@@ -19,11 +19,7 @@ function App() {
   useEffect(() => {
     Promise.all([api.getUser(), api.getInitialCards()])
       .then(([userData, cardsData]) => {
-        setCurrentUser({
-          name: userData.name,
-          about: userData.about,
-          avatar: userData.avatar,
-        });
+        setCurrentUser(userData);
       })
       .catch((err) => {
         console.log(err);
