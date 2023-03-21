@@ -1,40 +1,17 @@
-import { useState, useEffect } from "react";
-import api from "../utils/api";
+import { useState, useContext } from "react";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import Card from "./Card";
 
 function Main(props) {
-  const [userName, setUserName] = useState("");
-  const [userDescription, setUserDescription] = useState("");
-  const [userAvatar, setUserAvatar] = useState("");
-
   const [cards, setCards] = useState([]);
 
-  useEffect(() => {
-    Promise.all([api.getUser(), api.getInitialCards()])
-      .then(([userData, cardsData]) => {
-        setUserName(userData.name);
-        setUserDescription(userData.about);
-        setUserAvatar(userData.avatar);
-
-        setCards(
-          cardsData.map((item) => ({
-            id: item._id,
-            name: item.name,
-            src: item.link,
-            likesCount: item.likes.length,
-          }))
-        );
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+  const user = useContext(CurrentUserContext);
 
   return (
     <main className="content">
       <section className="profile">
         <div className="profile__container">
-          <img className="profile__avatar" src={userAvatar} alt="" />
+          <img className="profile__avatar" src={user.avatar} alt="" />
           <div className="profile__overlay">
             <a
               className="profile__edit-avatar"
@@ -47,7 +24,7 @@ function Main(props) {
         </div>
         <div className="profile__info">
           <div className="profile__name-edit">
-            <h1 className="profile__name">{userName}</h1>
+            <h1 className="profile__name">{user.name}</h1>
             <button
               type="button"
               aria-label="Редактировать"
@@ -55,7 +32,7 @@ function Main(props) {
               onClick={props.onEditProfile}
             ></button>
           </div>
-          <p className="profile__job">{userDescription}</p>
+          <p className="profile__job">{user.about}</p>
         </div>
         <button
           type="button"
