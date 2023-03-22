@@ -16,10 +16,30 @@ function App() {
 
   const [currentUser, setCurrentUser] = useState({});
 
+  const [cards, setCards] = useState([]);
+
+  function handleCardLike(card) {
+    const isLiked = card.likes.some((i) => i._id === currentUser._id);
+
+    api.likeCard(card._id, !isLiked).then((newCard) => {
+      setCards((state) => state.map((c) => (c._id === card._id ? newCard : c)));
+    });
+  }
+
   useEffect(() => {
     Promise.all([api.getUser(), api.getInitialCards()])
       .then(([userData, cardsData]) => {
         setCurrentUser(userData);
+
+        setCards(
+          cardsData.map((item) => ({
+            id: item._id,
+            owner: item.owner,
+            name: item.name,
+            src: item.link,
+            likes: item.likes,
+          }))
+        );
       })
       .catch((err) => {
         console.log(err);
@@ -44,7 +64,9 @@ function App() {
             onEditAvatar={setEditAvatarPopupOpen}
             onEditProfile={setEditProfilePopupOpen}
             onAddPlace={setAddPlacePopupOpen}
+            cards={cards}
             onCardClick={{ setSelectedCard, setIsImageOpen }}
+            onCardLike={handleCardLike}
           />
 
           <PopupWithForm

@@ -1,17 +1,15 @@
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import Card from "./Card";
 
 function Main(props) {
-  const [cards, setCards] = useState([]);
-
-  const user = useContext(CurrentUserContext);
+  const currentUser = useContext(CurrentUserContext);
 
   return (
     <main className="content">
       <section className="profile">
         <div className="profile__container">
-          <img className="profile__avatar" src={user.avatar} alt="" />
+          <img className="profile__avatar" src={currentUser.avatar} alt="" />
           <div className="profile__overlay">
             <a
               className="profile__edit-avatar"
@@ -24,7 +22,7 @@ function Main(props) {
         </div>
         <div className="profile__info">
           <div className="profile__name-edit">
-            <h1 className="profile__name">{user.name}</h1>
+            <h1 className="profile__name">{currentUser.name}</h1>
             <button
               type="button"
               aria-label="Редактировать"
@@ -32,7 +30,7 @@ function Main(props) {
               onClick={props.onEditProfile}
             ></button>
           </div>
-          <p className="profile__job">{user.about}</p>
+          <p className="profile__job">{currentUser.about}</p>
         </div>
         <button
           type="button"
@@ -43,13 +41,15 @@ function Main(props) {
       </section>
 
       <section className="places">
-        {cards.map((card) => (
+        {props.cards.map((card) => (
           <Card
             key={card.id}
             name={card.name}
+            owner={card.owner}
             src={card.src}
-            likesCount={card.likesCount}
+            likes={card.likes}
             onCardClick={props.onCardClick}
+            onCardLike={props.onCardLike}
           />
         ))}
       </section>
