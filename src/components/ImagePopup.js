@@ -5,7 +5,7 @@ function ImagePopup({ card, isOpen, onClose }) {
     <div className={`popup popup_image-view ${isOpen ? "popup_opened" : ""}`}>
       <div className="popup__image-container">
         <figure className="popup__figure">
-          <img className="popup__big-image" src={card.src} alt={card.name} />
+          <img className="popup__big-image" src={card.link} alt={card.name} />
           <figcaption className="popup__caption">{card.name}</figcaption>
         </figure>
         <button

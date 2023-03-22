@@ -26,6 +26,12 @@ function App() {
     });
   }
 
+  function handleCardDelete(card) {
+    api.deleteCard(card._id).then(() => {
+      setCards(cards.filter((c) => c._id !== card._id));
+    });
+  }
+
   useEffect(() => {
     Promise.all([api.getUser(), api.getInitialCards()])
       .then(([userData, cardsData]) => {
@@ -67,6 +73,7 @@ function App() {
             cards={cards}
             onCardClick={{ setSelectedCard, setIsImageOpen }}
             onCardLike={handleCardLike}
+            onCardDelete={handleCardDelete}
           />
 
           <PopupWithForm
