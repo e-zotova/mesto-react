@@ -21,7 +21,7 @@ function App() {
   function handleCardLike(card) {
     const isLiked = card.likes.some((i) => i._id === currentUser._id);
 
-    api.likeCard(card._id, !isLiked).then((newCard) => {
+    api.changeLikeCardStatus(card._id, !isLiked).then((newCard) => {
       setCards((state) => state.map((c) => (c._id === card._id ? newCard : c)));
     });
   }
@@ -33,10 +33,10 @@ function App() {
 
         setCards(
           cardsData.map((item) => ({
-            id: item._id,
+            _id: item._id,
             owner: item.owner,
             name: item.name,
-            src: item.link,
+            link: item.link,
             likes: item.likes,
           }))
         );

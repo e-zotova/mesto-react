@@ -1,12 +1,12 @@
 import { useContext } from "react";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
-function Card(card) {
+function Card({card, onCardClick, onCardLike}) {
   const currentUser = useContext(CurrentUserContext);
 
   function handleCardClick() {
-    card.onCardClick.setSelectedCard(card);
-    card.onCardClick.setIsImageOpen(true);
+    onCardClick.setSelectedCard(card);
+    onCardClick.setIsImageOpen(true);
   }
 
   function handleDeleteClick() {
@@ -14,7 +14,7 @@ function Card(card) {
   }
 
   function handleLikeClick() {
-    card.onCardLike(card);
+    onCardLike(card);
   }
 
   const isOwn = card.owner._id === currentUser._id;
@@ -22,7 +22,7 @@ function Card(card) {
 
   const cardLikeButtonClassName = (
     `places__like-button ${isLiked && 'places__like-button_active'}`
-  );;
+  );
 
   return (
     <article className="places__card">
@@ -30,7 +30,7 @@ function Card(card) {
       <img
         className="button places__image"
         onClick={handleCardClick}
-        src={card.src}
+        src={card.link}
         alt={card.name}
       />
       <div className="places__item">
