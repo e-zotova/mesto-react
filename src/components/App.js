@@ -76,6 +76,7 @@ function App() {
       .createCard(data)
       .then((newCard) => {
         setCards([newCard, ...cards]);
+
         closeAllPopups();
       })
       .catch((err) => {
