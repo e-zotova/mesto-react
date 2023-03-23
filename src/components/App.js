@@ -3,6 +3,7 @@ import Header from "./Header";
 import Main from "./Main";
 import PopupWithForm from "./PopupWithForm";
 import EditProfilePopup from "./EditProfilePopup";
+import EditAvatarPopup from "./EditAvatarPopup";
 import ImagePopup from "./ImagePopup";
 import Footer from "./Footer";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
@@ -34,11 +35,17 @@ function App() {
   }
 
   function handleUpdateUser(data) {
-    api.setUser(data)
-      .then((userInfo) => {
-        setCurrentUser(userInfo);
-        closeAllPopups();
-      })
+    api.setUser(data).then((userInfo) => {
+      setCurrentUser(userInfo);
+      closeAllPopups();
+    });
+  }
+
+  function handleUpdateAvatar(data) {
+    api.editAvatar(data).then((userInfo) => {
+      setCurrentUser(userInfo);
+      closeAllPopups();
+    });
   }
 
   useEffect(() => {
@@ -85,24 +92,12 @@ function App() {
             onCardDelete={handleCardDelete}
           />
 
-          <PopupWithForm
-            title="Обновить аватар"
-            name="popup_edit-avatar"
+          <EditAvatarPopup
+
             isOpen={isEditAvatarPopupOpen}
             onClose={closeAllPopups}
-          >
-            <label className="popup__label">
-              <input
-                id="avatar-url"
-                type="url"
-                name="avatar"
-                className="input input_type_avatar-image"
-                placeholder="Ссылка на картинку"
-                required
-              />
-              <span className="avatar-url-error popup__input-error"></span>
-            </label>
-          </PopupWithForm>
+            onUpdateAvatar={handleUpdateAvatar}
+          />
 
           <EditProfilePopup
             isOpen={isEditProfilePopupOpen}
