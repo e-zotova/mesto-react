@@ -8,11 +8,11 @@ function EditAvatarPopup(props) {
 
   useEffect(() => {
     avatarRef.current.value = currentUser.avatar;
-  }, [currentUser])
+  }, [currentUser]);
 
   function handleAvatarChange() {
     return avatarRef.current.value;
-}
+  }
 
   function handleSubmit(e) {
     e.preventDefault();
