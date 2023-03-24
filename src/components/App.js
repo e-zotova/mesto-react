@@ -46,8 +46,7 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
-      })
-      ;
+      });
   }
 
   function handleUpdateUser(data) {
@@ -117,22 +116,25 @@ function App() {
     setSelectedCard({});
   }
 
-  const isOpen = isEditAvatarPopupOpen || isEditProfilePopupOpen || isAddPlacePopupOpen || isImageOpen;
+  const isOpen =
+    isEditAvatarPopupOpen ||
+    isEditProfilePopupOpen ||
+    isAddPlacePopupOpen ||
+    isImageOpen;
 
   useEffect(() => {
     function closeByEscape(evt) {
-      if(evt.key === 'Escape') {
+      if (evt.key === "Escape") {
         closeAllPopups();
       }
     }
-    if(isOpen) {
-      document.addEventListener('keydown', closeByEscape);
+    if (isOpen) {
+      document.addEventListener("keydown", closeByEscape);
       return () => {
-        document.removeEventListener('keydown', closeByEscape);
-      }
+        document.removeEventListener("keydown", closeByEscape);
+      };
     }
-  }, [isOpen])
-
+  }, [isOpen]);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
