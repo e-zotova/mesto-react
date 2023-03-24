@@ -3,6 +3,12 @@ import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 function Card({ card, onCardClick, onCardLike, onCardDelete }) {
   const currentUser = useContext(CurrentUserContext);
+  const isOwn = card.owner._id === currentUser._id;
+  const isLiked = card.likes.some((i) => i._id === currentUser._id);
+
+  const cardLikeButtonClassName = `places__like-button ${
+    isLiked && "places__like-button_active"
+  }`;
 
   function handleCardClick() {
     onCardClick.setSelectedCard(card);
@@ -16,13 +22,6 @@ function Card({ card, onCardClick, onCardLike, onCardDelete }) {
   function handleLikeClick() {
     onCardLike(card);
   }
-
-  const isOwn = card.owner._id === currentUser._id;
-  const isLiked = card.likes.some((i) => i._id === currentUser._id);
-
-  const cardLikeButtonClassName = `places__like-button ${
-    isLiked && "places__like-button_active"
-  }`;
 
   return (
     <article className="places__card">

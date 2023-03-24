@@ -11,17 +11,15 @@ import ImagePopup from "./ImagePopup";
 import Footer from "./Footer";
 
 function App() {
+  const [currentUser, setCurrentUser] = useState({});
+  const [cards, setCards] = useState([]);
+  const [selectedCard, setSelectedCard] = useState({});
+
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
   const [isImageOpen, setIsImageOpen] = useState(false);
-  const [selectedCard, setSelectedCard] = useState({});
-
-  const [currentUser, setCurrentUser] = useState({});
-
   const [isLoading, setIsLoading] = useState(false);
-
-  const [cards, setCards] = useState([]);
 
   function handleCardLike(card) {
     const isLiked = card.likes.some((i) => i._id === currentUser._id);
