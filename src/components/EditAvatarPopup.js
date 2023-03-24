@@ -2,7 +2,7 @@ import { useRef, useEffect, useContext } from "react";
 import PopupWithForm from "./PopupWithForm";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
-function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
+function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, isLoading }) {
   const currentUser = useContext(CurrentUserContext);
   const avatarRef = useRef();
 
@@ -24,6 +24,7 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
       name="popup_edit-avatar"
       isOpen={isOpen}
       onClose={onClose}
+      isLoading={isLoading}
       onSubmit={handleSubmit}
     >
       <label className="popup__label">

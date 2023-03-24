@@ -7,6 +7,7 @@ function PopupWithForm({
   name,
   onSubmit,
   saveButton,
+  isLoading,
   children,
 }) {
   return (
@@ -16,7 +17,7 @@ function PopupWithForm({
         <form className={`popup__form ${name}`} name={name} onSubmit={onSubmit}>
           {children}
           <button type="submit" className="button popup__save-button">
-            {saveButton || "Сохранить"}
+            {isLoading ? "Сохранение..." : saveButton || "Сохранить"}
           </button>
         </form>
         <button

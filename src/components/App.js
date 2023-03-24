@@ -19,6 +19,8 @@ function App() {
 
   const [currentUser, setCurrentUser] = useState({});
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const [cards, setCards] = useState([]);
 
   function handleCardLike(card) {
@@ -40,14 +42,16 @@ function App() {
     api
       .deleteCard(card._id)
       .then(() => {
-        setCards(cards.filter((c) => c._id !== card._id));
+        setCards((state) => state.filter((item) => item._id !== card._id));
       })
       .catch((err) => {
         console.log(err);
-      });
+      })
+      ;
   }
 
   function handleUpdateUser(data) {
+    setIsLoading(true);
     api
       .setUser(data)
       .then((userInfo) => {
@@ -56,10 +60,14 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   }
 
   function handleUpdateAvatar(data) {
+    setIsLoading(true);
     api
       .editAvatar(data)
       .then((userInfo) => {
@@ -68,19 +76,25 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   }
 
   function handleAddPlaceSubmit(data) {
+    setIsLoading(true);
     api
       .createCard(data)
       .then((newCard) => {
         setCards([newCard, ...cards]);
-
         closeAllPopups();
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   }
 
@@ -88,16 +102,7 @@ function App() {
     Promise.all([api.getUser(), api.getInitialCards()])
       .then(([userData, cardsData]) => {
         setCurrentUser(userData);
-
-        setCards(
-          cardsData.map((item) => ({
-            _id: item._id,
-            owner: item.owner,
-            name: item.name,
-            link: item.link,
-            likes: item.likes,
-          }))
-        );
+        setCards(cardsData);
       })
       .catch((err) => {
         console.log(err);
@@ -132,18 +137,21 @@ function App() {
             isOpen={isEditAvatarPopupOpen}
             onClose={closeAllPopups}
             onUpdateAvatar={handleUpdateAvatar}
+            isLoading={isLoading}
           />
 
           <EditProfilePopup
             isOpen={isEditProfilePopupOpen}
             onClose={closeAllPopups}
             onUpdateUser={handleUpdateUser}
+            isLoading={isLoading}
           />
 
           <AddPlacePopup
             isOpen={isAddPlacePopupOpen}
             onClose={closeAllPopups}
             onAddPlace={handleAddPlaceSubmit}
+            isLoading={isLoading}
           />
 
           <PopupWithForm
