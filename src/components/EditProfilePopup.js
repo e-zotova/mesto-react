@@ -2,7 +2,7 @@ import { useState, useContext, useEffect } from "react";
 import PopupWithForm from "./PopupWithForm";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
-function EditProfilePopup(props) {
+function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const currentUser = useContext(CurrentUserContext);
@@ -10,7 +10,7 @@ function EditProfilePopup(props) {
   useEffect(() => {
     setName(currentUser.name);
     setDescription(currentUser.about);
-  }, [currentUser]);
+  }, [currentUser, isOpen]);
 
   function handleNameChange(e) {
     setName(e.target.value);
@@ -23,7 +23,7 @@ function EditProfilePopup(props) {
   function handleSubmit(e) {
     e.preventDefault();
 
-    props.onUpdateUser({
+    onUpdateUser({
       name,
       about: description,
     });
@@ -33,8 +33,8 @@ function EditProfilePopup(props) {
     <PopupWithForm
       title="Редактировать профиль"
       name="popup_profile"
-      isOpen={props.isOpen}
-      onClose={props.onClose}
+      isOpen={isOpen}
+      onClose={onClose}
       onSubmit={handleSubmit}
     >
       <label className="popup__label">
@@ -44,7 +44,7 @@ function EditProfilePopup(props) {
           type="text"
           className="input input_type_full-name"
           placeholder="Имя"
-          value={name || "Жак Ив-Кусто"}
+          value={name || ""}
           onChange={handleNameChange}
           minLength="2"
           maxLength="40"
@@ -59,13 +59,13 @@ function EditProfilePopup(props) {
           name="job"
           className="input input_type_job"
           placeholder="О себе"
-          value={description || "Исследователь океана"}
+          value={description || ""}
           onChange={handleDescriptionChange}
           minLength="2"
           maxLength="200"
           required
         />
-        <span className="job-error popup__input-error"></span>
+        <span className="job-error popup__input-error" />
       </label>
     </PopupWithForm>
   );

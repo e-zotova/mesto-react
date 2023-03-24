@@ -2,19 +2,31 @@ import { useContext } from "react";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import Card from "./Card";
 
-function Main(props) {
+function Main({
+  onEditAvatar,
+  onEditProfile,
+  onAddPlace,
+  cards,
+  onCardClick,
+  onCardLike,
+  onCardDelete,
+}) {
   const currentUser = useContext(CurrentUserContext);
 
   return (
     <main className="content">
       <section className="profile">
         <div className="profile__container">
-          <img className="profile__avatar" src={currentUser.avatar} alt="" />
+          <img
+            className="profile__avatar"
+            src={currentUser.avatar}
+            alt="Аватар пользователя"
+          />
           <div className="profile__overlay">
             <a
               className="profile__edit-avatar"
               href="/#"
-              onClick={props.onEditAvatar}
+              onClick={onEditAvatar}
             >
               {" "}
             </a>
@@ -27,7 +39,7 @@ function Main(props) {
               type="button"
               aria-label="Редактировать"
               className="button profile__edit-button"
-              onClick={props.onEditProfile}
+              onClick={onEditProfile}
             ></button>
           </div>
           <p className="profile__job">{currentUser.about}</p>
@@ -36,18 +48,18 @@ function Main(props) {
           type="button"
           aria-label="Добавить"
           className="button profile__add-button"
-          onClick={props.onAddPlace}
-        ></button>
+          onClick={onAddPlace}
+        />
       </section>
 
       <section className="places">
-        {props.cards.map((card) => (
+        {cards.map((card) => (
           <Card
             key={card._id}
             card={card}
-            onCardClick={props.onCardClick}
-            onCardLike={props.onCardLike}
-            onCardDelete={props.onCardDelete}
+            onCardClick={onCardClick}
+            onCardLike={onCardLike}
+            onCardDelete={onCardDelete}
           />
         ))}
       </section>

@@ -138,25 +138,25 @@ function App() {
             isOpen={isEditProfilePopupOpen}
             onClose={closeAllPopups}
             onUpdateUser={handleUpdateUser}
-          ></EditProfilePopup>
+          />
 
           <AddPlacePopup
             isOpen={isAddPlacePopupOpen}
             onClose={closeAllPopups}
             onAddPlace={handleAddPlaceSubmit}
-          ></AddPlacePopup>
+          />
 
           <PopupWithForm
             title="Вы уверены?"
             name="popup_delete-card"
             saveButton="Да"
-          ></PopupWithForm>
+          />
 
           <ImagePopup
             card={selectedCard}
             isOpen={isImageOpen}
             onClose={closeAllPopups}
-          ></ImagePopup>
+          />
 
           <Footer />
         </div>

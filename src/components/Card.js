@@ -46,7 +46,7 @@ function Card({ card, onCardClick, onCardLike, onCardDelete }) {
             aria-label="Добавить в избранное"
             className={`button ${cardLikeButtonClassName}`}
             onClick={handleLikeClick}
-          ></button>
+          />
           <div className="places__like-counter">{card.likes.length}</div>
         </div>
       </div>
