@@ -3,11 +3,11 @@ import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import api from "../utils/api";
 import Header from "./Header";
 import Main from "./Main";
-import PopupWithForm from "./PopupWithForm";
 import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
 import ImagePopup from "./ImagePopup";
+import PopupWithConfirmation from './PopupWithConfirmation';
 import Footer from "./Footer";
 
 function App() {
@@ -19,6 +19,7 @@ function App() {
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
   const [isImageOpen, setIsImageOpen] = useState(false);
+  const [isDeleteConfirmationOpen, setDeleteConfirmationOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   function handleCardLike(card) {
@@ -37,13 +38,18 @@ function App() {
   }
 
   function handleCardDelete(card) {
+    setIsLoading(true);
     api
       .deleteCard(card._id)
       .then(() => {
         setCards((state) => state.filter((item) => item._id !== card._id));
+        closeAllPopups();
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   }
 
@@ -111,6 +117,7 @@ function App() {
     setEditProfilePopupOpen(false);
     setAddPlacePopupOpen(false);
     setIsImageOpen(false);
+    setDeleteConfirmationOpen(false);
     setSelectedCard({});
   }
 
@@ -118,7 +125,8 @@ function App() {
     isEditAvatarPopupOpen ||
     isEditProfilePopupOpen ||
     isAddPlacePopupOpen ||
-    isImageOpen;
+    isImageOpen ||
+    isDeleteConfirmationOpen;
 
   useEffect(() => {
     function closeByEscape(evt) {
@@ -147,7 +155,7 @@ function App() {
             cards={cards}
             onCardClick={{ setSelectedCard, setIsImageOpen }}
             onCardLike={handleCardLike}
-            onCardDelete={handleCardDelete}
+            onDeleteClick={setDeleteConfirmationOpen}
           />
 
           <EditAvatarPopup
@@ -171,16 +179,18 @@ function App() {
             isLoading={isLoading}
           />
 
-          <PopupWithForm
-            title="Вы уверены?"
-            name="popup_delete-card"
-            saveButton="Да"
-          />
-
           <ImagePopup
             card={selectedCard}
             isOpen={isImageOpen}
             onClose={closeAllPopups}
+          />
+
+          <PopupWithConfirmation
+            card={selectedCard}
+            isOpen={isDeleteConfirmationOpen}
+            onClose={closeAllPopups}
+            isLoading={isLoading}
+            onCardDelete={handleCardDelete}
           />
 
           <Footer />

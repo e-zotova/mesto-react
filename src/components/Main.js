@@ -9,7 +9,7 @@ function Main({
   cards,
   onCardClick,
   onCardLike,
-  onCardDelete,
+  onDeleteClick
 }) {
   const currentUser = useContext(CurrentUserContext);
 
@@ -59,7 +59,7 @@ function Main({
             card={card}
             onCardClick={onCardClick}
             onCardLike={onCardLike}
-            onCardDelete={onCardDelete}
+            onDeleteClick={onDeleteClick}
           />
         ))}
       </section>
